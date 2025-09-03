@@ -1,0 +1,49 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-4.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="pt-br">
+
+<head th:replace="~{fragmentos :: header('Home Produtos')}"></head>
+<body>
+    <div class="container">
+        <div class="row">
+            <h1>Lista de Produtos</h1>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nome</th>
+                            <th>Preço</th>
+                            <th>Criado em:</th>
+                            <th>Atualizado em:</th>
+                            <th>Editar</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="produto : ${produtos}">
+                            <td th:text="${produto.id}"></td>
+                            <td th:text="${produto.name}"></td>
+                            <td th:text="${'R$ ' + #numbers.formatDecimal(produto.price / 100.0, 1, 2)}"></td>
+                            <td th:text="${#temporals.format(produto.createdAt, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td th:text="${#temporals.format(produto.updatedAt, 'dd/MM/yyyy HH:mm')}"></td>
+                            <td><a th:href="@{/produtos/editar/{id}(id=${produto.id})}" class="btn btn-warning">Editar</a></td>
+                            <td><a th:href="@{/produtos/excluir/{id}(id=${produto.id})}" class="btn btn-danger">Excluir</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="row">
+            <a href="/produtos/cadastrar" class="btn btn-success">Cadastrar Novo Produto</a>
+        </div>
+    </div>
+
+    <script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW"
+		crossorigin="anonymous"></script>
+</body>
+</html>
